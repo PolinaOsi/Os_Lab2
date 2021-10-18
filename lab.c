@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 static const int SUCCESS_OF_CREATION = 0;
+static const int SUCCESS_OF_JOIN = 0;
 
 void *print(void *whois) {
     for ( int i=0; i < 10; i++) {
@@ -25,8 +26,11 @@ int main (int  argc, char *argv[]) {
         perror("Thread was not created!");
         exit(EXIT_FAILURE);
     }
-        pthread_join (id_of_thread, NULL);
+    int result_of_join = pthread_join (id_of_thread, NULL);
+    if (result_of_join != SUCCESS_OF_JOIN) {
+        perror("Thread was not joined!");
+         exit(EXIT_FAILURE);
+    }
     print("parent ");
     return EXIT_SUCCESS;
 }
-
